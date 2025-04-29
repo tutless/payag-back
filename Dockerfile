@@ -8,8 +8,13 @@ COPY package.json .
 
 RUN pnpm install
 
-COPY ./dist .
+COPY . .
+
+RUN pnpm build
+
+COPY .env ./dest
 
 EXPOSE 8000
 
-CMD [ "node","src/main.js" ]
+CMD [ "node","dist/src/main" ]
+
