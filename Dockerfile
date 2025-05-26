@@ -12,7 +12,7 @@ COPY . .
 
 RUN pnpm build
 
-COPY .env dist
+# COPY .env dist
 
 EXPOSE 8000
 
