@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChatMessagesInput } from 'dtos/chat_messages.input';
+import { BySessionId } from 'dtos/chat_session.arg';
 import { ChatSessionInput } from 'dtos/chat_session.input';
 import { ChatMessageEntity } from 'src/entity/chat_message.entity';
 import { ChatSessionEntity } from 'src/entity/chat_session.entity';
@@ -42,9 +43,22 @@ export class ChatHistoryService {
         return this.chatSessionRepository.find();       
     }
 
+    async getAllChatSessionAndMessages(): Promise<ChatSessionEntity[]> {
+        const chatSession = await this.chatSessionRepository.find({
+            relations: ['chatMessages','chatMessages.chatSession'],
+        });
+        return chatSession
+    }
+
+    async getChatSessionById(id: BySessionId): Promise<ChatSessionEntity> {
+        const chatSession = await this.chatSessionRepository.findOne({ where: { id: id.sessionId }, relations: ['chatMessages'] });
+        if (!chatSession) throw new NotFoundException('ChatSession not found');
+        return chatSession;
+    }
+
     async createChatSession(chatSession: ChatSessionInput): Promise<ChatSessionEntity> {
         return this.chatSessionRepository.save(chatSession);
-        
+
 
     }
 

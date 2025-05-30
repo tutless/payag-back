@@ -9,8 +9,11 @@ export class ChatMessageEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  chat_message: string;
+  @Column('simple-json', { name: 'chat_message', nullable: true})
+  chat_message: Record<string, string>;
+
+  @Column({ name: 'chat_session_id' })
+  chatSessionId: number;
 
   @ManyToOne(() => ChatSessionEntity, (chatSession) => chatSession.chatMessages)
   @JoinColumn({ name: 'chat_session_id' })
