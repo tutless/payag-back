@@ -67,4 +67,10 @@ export class ChatSessionResolver {
         sessModel.title = newSession.title;
         return sessModel;
     }  
+
+    @Mutation(returns => Boolean)
+    async deleteChatSession(@Args() sessParam: BySessionId): Promise<boolean> {
+        const result = await this.charHistoryService.deleteChatSession(sessParam);
+        return result;
+    }
 }

@@ -58,9 +58,13 @@ export class ChatHistoryService {
 
     async createChatSession(chatSession: ChatSessionInput): Promise<ChatSessionEntity> {
         return this.chatSessionRepository.save(chatSession);
-
-
+    }
+    async deleteChatSession(id: BySessionId): Promise<boolean> {
+        const chatSession = await this.chatSessionRepository.findOne({ where: { id: id.sessionId } });
+        if (!chatSession) throw new NotFoundException('ChatSession not found');
+        const deleteSession = await this.chatSessionRepository.remove(chatSession);
+        return !!deleteSession;
     }
 
-    
+
 }
