@@ -14,6 +14,7 @@ export const createGrpcOption = (configService:ConfigService):GrpcOptions => ({
             new ReflectionService(pkg).addToServer(server)
         },
         url: configService.get<string>('GRPC_URL')
+        
     }
 
 })

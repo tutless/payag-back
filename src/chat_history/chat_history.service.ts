@@ -25,7 +25,7 @@ export class ChatHistoryService {
     async createChatMessage(chatMessage: ChatMessagesInput): Promise<ChatMessageEntity> {
 
         const chatSession = await this.chatSessionRepository.findOne({ where: { id: chatMessage.chatSessionId } });
-         if (!chatSession) throw new NotFoundException('ChatSession not found');
+         if (!chatSession) throw new NotFoundException('ChatSession was not found');
         const chatEntity = this.chatMessageRepository.create({
             chat_message: chatMessage.chat_message,     
             chatSession

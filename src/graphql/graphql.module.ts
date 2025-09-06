@@ -13,7 +13,8 @@ import { join } from 'path';
                 'graphql-ws':true
             },
             playground: true,
-            path: '/graphql'
+            path: '/graphql',
+            context: ({ req }) => ({ req})
         })
     ]
 })

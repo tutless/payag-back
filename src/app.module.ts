@@ -7,6 +7,8 @@ import { ChatModule } from './chat/chat.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChatHistoryModule } from './chat_history/chat_history.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -23,11 +25,14 @@ import { ChatHistoryModule } from './chat_history/chat_history.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       autoLoadEntities: true,
+      synchronize: true, // Set to false in production
    
     }),
     GraphqlModule,
     ChatModule,
-    ChatHistoryModule
+    ChatHistoryModule,
+    AuthModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -4,11 +4,12 @@ import { ChatService } from './chat.service';
 import { ChatResolver } from './chat.resolver';
 import { ClientsModule } from '@nestjs/microservices';
 import { createGrpcOption } from 'src/grpc-client.options';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   providers: [ChatService, ChatResolver],
   imports:[
-
+    AuthModule,
     ClientsModule.registerAsync([
       {
         name:"PAYAG_PKG",
@@ -18,12 +19,7 @@ import { createGrpcOption } from 'src/grpc-client.options';
       }
     ]),
 
-    // ClientsModule.register([
-    //             {
-    //                 name:"PAYAG_PKG",
-    //                 ...grpcClientOptions,
-    //             }
-    //         ])
+   
   ]
 
 })
